@@ -34,7 +34,6 @@
             font-size: 50px;
             margin: 0 auto 20px auto;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
         }
 
         .title-small {
@@ -71,7 +70,6 @@
             text-decoration: none;
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: background-color 0.2s;
         }
 
         .action-btn:active { background-color: rgba(255, 255, 255, 0.3); }
@@ -80,8 +78,6 @@
             background-color: rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 5px 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -183,20 +179,15 @@
     </button>
 
     <script>
-        document.getElementById('shareBtn').addEventListener('click', async function () {
-            var data = {
-                title: 'Hüseyin Polat - İletişim',
-                text: 'Hüseyin Polat iletişim bilgileri',
-                url: window.location.href
-            };
-            try {
-                if (navigator.share) {
-                    await navigator.share(data);
-                } else if (navigator.clipboard) {
-                    await navigator.clipboard.writeText(data.url);
-                    alert('Bağlantı kopyalandı.');
-                }
-            } catch (e) { /* paylaşım iptal edildi */ }
+        document.getElementById('shareBtn').addEventListener('click', function () {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Hüseyin Polat - İletişim',
+                    url: window.location.href
+                }).catch(function () {});
+            } else {
+                alert('Bu tarayıcı paylaşmayı desteklemiyor.');
+            }
         });
     </script>
 
